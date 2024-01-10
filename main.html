@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: rgb(30, 30, 30);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .blue-box {
+            background-color: rgb(84, 153, 243);
+            height: 2.3cm;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .blue-line {
+            position: absolute;
+            top: calc(2.3cm + 5cm);
+            left: 50%;
+            height: 2px;
+            width: 70%;
+            background-color: rgb(84, 153, 243);
+            transform: translateX(-50%);
+            transition: top 0.5s ease-in-out;
+        }
+
+        .blue-line::before,
+        .blue-line::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            width: 20px;
+            height: 22px;
+            background: radial-gradient(circle at center, rgb(84, 153, 243) 0%, transparent 70%);
+        }
+
+        .blue-line::before {
+            left: -10px;
+        }
+
+        .blue-line::after {
+            right: -10px;
+        }
+
+        .blue-box::after {
+            content: "SLC Water";
+            color: white;
+            font-size: 1.5cm;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ornamental-button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 0.5cm;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-right: 20px;
+        }
+
+        .ornamental-button::after {
+            content: "|";
+            color: white;
+            margin-left: 10px;
+        }
+
+        .ornamental-button:last-child::after {
+            content: "";
+        }
+
+        .ornamental-button:hover {
+            cursor: pointer;
+            color: rgb(166, 236, 85);
+            border-bottom: 1px solid rgb(84, 153, 243);
+        }
+
+        .team-box {
+            background-color: rgb(84, 153, 243);
+            color: white;
+            padding: 20px;
+            margin: 20px;
+            margin-top: 4cm;
+            /* Add this line */
+            display: none;
+            position: relative;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.5;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 18px;
+            border: none;
+            background: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .brand-icon {
+            height: 2cm;
+            margin-right: auto;
+        }
+
+        .brand-icon:hover {
+            height: 2.8cm;
+        }
+
+        .shop-box {
+            background-color: rgb(84, 153, 243);
+            color: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 200px;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: absolute;
+            top: calc(2.3cm + 5cm + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            transition: top 0.5s ease-in-out;
+        }
+
+        .shop-box img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .shop-box button {
+            background-color: white;
+            color: rgb(84, 153, 243);
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blue-box">
+        <img src="Resources/icon.png" alt="SLC Water Icon" class="brand-icon">
+        <button class="ornamental-button">Contact</button>
+        <button class="ornamental-button" onclick="toggleTeam()">Despre Noi</button>
+        <button class="ornamental-button">Carucior</button>
+    </div>
+
+    <div id="teamBox" class="team-box">
+        <button class="close-btn" onclick="toggleTeam()">X</button>
+        <h2>Echipa Noastră:</h2>
+        <div>
+            <h3>Surigiu Darius</h3>
+            <p>Un tânăr cu o pasiune profundă pentru programare și antreprenoriat, mereu în căutarea de noi provocări.
+            </p>
+        </div>
+        <div>
+            <h3>Junc Luca</h3>
+            <p>Un adolescent optimist, care privește cu încredere spre viitor și își propune să facă o diferență
+                pozitivă în lume.</p>
+        </div>
+        <div>
+            <h3>Codrea Radu</h3>
+            <p>Un antreprenor entuziast, care combină pasiunea pentru sport cu o abordare strategică a afacerilor.</p>
+        </div>
+    </div>
+    <div class="wave"></div>
+    <div class="blue-line"></div>
+
+    <div class="shop-box">
+        <img src="Resources/icon.png" alt="SLC Water Icon">
+        <h2>Bax de apa 2L SLC</h2>
+        <p>Pret: 4.50 RON</p>
+        <p>Stoc: 50</p>
+        <button>Cumpara</button>
+    </div>
+
+    <script>
+        var teamVisible = false;
+
+        function updatePositions() {
+            var teamBox = document.getElementById("teamBox");
+            var blueLine = document.querySelector(".blue-line");
+            var shopBox = document.querySelector(".shop-box");
+            var teamBoxHeight = teamBox.offsetHeight;
+            blueLine.style.top = "calc(2.3cm + 5cm + 2px + " + teamBoxHeight + "px + 4cm)";
+            shopBox.style.top = "calc(2.3cm + 5cm + 2px + " + teamBoxHeight + "px + 4cm)";
+        }
+
+
+        function toggleTeam() {
+            var teamBox = document.getElementById("teamBox");
+            var blueLine = document.querySelector(".blue-line");
+            var shopBox = document.querySelector(".shop-box");
+
+            if (teamVisible) {
+                teamBox.style.display = "none";
+                blueLine.style.top = "calc(2.3cm + 5cm + 2px)";
+                shopBox.style.top = "calc(2.3cm + 5cm + 2px)";
+            } else {
+                teamBox.style.display = "block";
+                updatePositions();
+            }
+
+            teamVisible = !teamVisible;
+        }
+
+        window.addEventListener('scroll', updatePositions);
+    </script>
+</body>
+
+</html>
